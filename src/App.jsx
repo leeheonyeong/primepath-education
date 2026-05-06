@@ -1,0 +1,776 @@
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  Award,
+  BookOpen,
+  CheckCircle,
+  ClipboardList,
+  FileText,
+  GraduationCap,
+  MessageCircle,
+  ShieldCheck,
+  Sparkles,
+  Star,
+  Target,
+} from "lucide-react";
+
+const formLinks = {
+  en: "https://docs.google.com/forms/d/e/1FAIpQLScfkCpsJgIqkLJju_n4mnwXhdEVOS_OXDhOd40aDUdrZjkJ0g/viewform?usp=header",
+  ko: "https://docs.google.com/forms/d/e/1FAIpQLScmo2_eAHxpXjAcn8K4B4uQtjpziVVlKcBMZIhTLFFK2R6FSQ/viewform?usp=header",
+};
+
+const content = {
+  en: {
+    brand: "PrimePath Education",
+    subBrand: "Premium 1:1 Academic Mentoring",
+    nav: ["Programs", "Process", "Why us", "Consultation"],
+    book: "Book Consultation",
+    switchLang: "한국어",
+    heroBadge: "AP · SAT · Admissions Prep · English · Math",
+    heroTitle: "Premium 1:1 academic mentoring for students with ambitious goals.",
+    heroText:
+      "We help students prepare for AP, Digital SAT, international school admissions, English, and math through personalized tutoring, careful mentor matching, and parent-facing progress management.",
+    request: "Request a Consultation",
+    viewPrograms: "View Programs",
+    stats: [
+      ["1:1", "Private classes"],
+      ["AP/SAT", "Targeted prep"],
+      ["Reports", "Parent updates"],
+    ],
+    previewSmall: "Student plan preview",
+    previewTitle: "Personalized Roadmap",
+    premiumMatch: "Premium Match",
+    planRows: [
+      ["Goal", "AP Calculus BC 5 + SAT Math improvement"],
+      ["Student", "International school Grade 10"],
+      ["Focus", "Weak-point analysis, timed practice, weekly review"],
+      ["Parent Update", "Lesson report + homework plan after each class"],
+    ],
+    mentorTitle: "Matched Academic Mentor",
+    mentorText:
+      "Selected based on subject expertise, curriculum familiarity, teaching style, and student personality fit.",
+    programsIntro: "Programs",
+    programsTitle: "Focused support for high-stakes academic goals.",
+    programsText:
+      "Choose a program, or let us design a custom plan after a consultation.",
+    programs: [
+      {
+        title: "AP 1:1 Classes",
+        description:
+          "Personalized AP tutoring for students who need concept mastery, exam strategy, and structured practice across subjects such as Calculus, Statistics, Economics, Psychology, English, Biology, Chemistry, and Physics.",
+        tag: "Score-focused",
+      },
+      {
+        title: "Digital SAT Prep",
+        description:
+          "Private SAT coaching built around diagnostics, weak-point analysis, timing strategy, vocabulary, reading accuracy, grammar, and math problem-solving speed.",
+        tag: "Strategy-driven",
+      },
+      {
+        title: "International School Admissions Prep",
+        description:
+          "Interview practice, writing support, entrance assessment preparation, and school-fit guidance for students applying to international schools in Korea or abroad.",
+        tag: "Admissions-ready",
+      },
+      {
+        title: "English & Math Support",
+        description:
+          "1:1 academic support for elementary, middle, and high school students who need stronger fundamentals, schoolwork support, or international curriculum alignment.",
+        tag: "Foundation-building",
+      },
+    ],
+    methodIntro: "Our Method",
+    methodTitle: "A clear process from diagnosis to progress.",
+    process: [
+      [
+        "Academic Diagnosis",
+        "We first understand the student's level, school curriculum, target score, timeline, and learning style.",
+      ],
+      [
+        "Personalized Roadmap",
+        "Each student receives a clear learning plan based on goals such as AP 5, SAT improvement, school GPA, or entrance preparation.",
+      ],
+      [
+        "Matched 1:1 Mentor",
+        "Students are matched with a suitable tutor based on subject expertise, teaching style, and personality fit.",
+      ],
+      [
+        "Progress Reporting",
+        "Parents receive clear updates on lesson content, homework, weaknesses, and next steps.",
+      ],
+    ],
+    whyIntro: "Why Families Choose Us",
+    whyTitle: "Premium tutoring should feel structured, transparent, and reliable.",
+    whyText:
+      "Parents should not have to guess whether a class is working. We combine careful tutor matching, clear academic planning, and consistent communication.",
+    trustPoints: [
+      "Verified academic background and subject ability",
+      "English-capable tutors for international curriculum students",
+      "1:1 personalized lesson plans, not generic academy classes",
+      "Parent communication and progress reports",
+      "Replacement support if the match is not the right fit",
+      "Premium yet flexible alternative to expensive large academies",
+    ],
+    parentTab: "For Parents",
+    studentTab: "For Students",
+    parentTitle:
+      "Know exactly what your child is learning and where they need to improve.",
+    parentText:
+      "Our service is designed for parents who want premium academic support without the confusion of large academy classes or random tutor matching.",
+    parentCards: [
+      "Reliable tutor screening",
+      "Clear parent communication",
+      "Curriculum-aligned classes",
+      "Goal-focused learning plan",
+    ],
+    studentTitle:
+      "Study with a mentor who understands your goals, not just your homework.",
+    studentText:
+      "Whether you are preparing for AP exams, SAT, admissions interviews, or school math and English, we help you build a practical plan and stay accountable.",
+    studentSupport: "Student support includes",
+    studentItems: [
+      "Customized study plan",
+      "Weakness-based practice",
+      "Homework and test preparation",
+      "Confidence-building speaking and writing support",
+    ],
+    consultIntro: "Start Here",
+    consultTitle: "Request a private consultation.",
+    consultText:
+      "Share the student’s grade, school type, target subjects, timeline, and goals. We will recommend the most suitable class structure and mentor profile.",
+    consultCardTitle: "Start with a short consultation request.",
+    consultCardText:
+      "The form will ask about the student’s grade, school type, curriculum, target subjects, schedule, and goals so we can recommend the right 1:1 plan.",
+    consultSteps: ["Submit request", "Review by team", "Receive class plan"],
+    submit: "Submit Consultation Request",
+    formNote:
+      "Click the consultation button to submit your request through our Google Form.",
+    footer: "AP · SAT · Admissions Prep · English · Math · 1:1 Premium Mentoring",
+  },
+
+  ko: {
+    brand: "PrimePath Education",
+    subBrand: "프리미엄 1:1 맞춤 학습 멘토링",
+    nav: ["프로그램", "진행 방식", "신뢰 포인트", "상담 신청"],
+    book: "상담 신청",
+    switchLang: "English",
+    heroBadge: "AP · SAT · 입학 준비 · 영어 · 수학",
+    heroTitle: "목표가 뚜렷한 학생을 위한 프리미엄 1:1 학습 멘토링.",
+    heroText:
+      "AP, Digital SAT, 국제학교 입학 준비, 영어, 수학 수업을 학생의 수준과 목표에 맞춰 1:1로 설계하고, 적합한 멘토 매칭과 학부모 진행 보고까지 함께 관리합니다.",
+    request: "상담 신청하기",
+    viewPrograms: "프로그램 보기",
+    stats: [
+      ["1:1", "개인 맞춤 수업"],
+      ["AP/SAT", "목표 점수 대비"],
+      ["리포트", "학부모 피드백"],
+    ],
+    previewSmall: "학생 학습 플랜 예시",
+    previewTitle: "맞춤형 로드맵",
+    premiumMatch: "프리미엄 매칭",
+    planRows: [
+      ["목표", "AP Calculus BC 5점 + SAT Math 향상"],
+      ["학생", "국제학교 Grade 10"],
+      ["집중 영역", "약점 분석, 시간 관리 연습, 주간 복습"],
+      ["학부모 리포트", "수업 내용 + 숙제 플랜 전달"],
+    ],
+    mentorTitle: "매칭된 전문 학습 멘토",
+    mentorText:
+      "과목 전문성, 커리큘럼 이해도, 수업 스타일, 학생 성향을 고려하여 적합한 멘토를 매칭합니다.",
+    programsIntro: "프로그램",
+    programsTitle: "중요한 학업 목표를 위한 집중 1:1 수업.",
+    programsText:
+      "원하는 프로그램을 선택하거나, 상담 후 학생에게 맞는 맞춤 플랜을 설계할 수 있습니다.",
+    programs: [
+      {
+        title: "AP 1:1 수업",
+        description:
+          "Calculus, Statistics, Economics, Psychology, English, Biology, Chemistry, Physics 등 AP 과목의 개념 이해, 문제풀이, 시험 전략, 실전 연습을 학생 수준에 맞춰 진행합니다.",
+        tag: "점수 목표형",
+      },
+      {
+        title: "Digital SAT 대비",
+        description:
+          "진단 테스트, 약점 분석, 시간 관리, 어휘, 독해 정확도, 문법, 수학 문제풀이 속도 향상을 중심으로 SAT 전략을 1:1로 코칭합니다.",
+        tag: "전략 중심",
+      },
+      {
+        title: "국제학교 입학 준비",
+        description:
+          "국내외 국제학교 지원 학생을 위한 인터뷰 연습, writing 지원, entrance assessment 대비, 학교별 준비 전략을 제공합니다.",
+        tag: "입학 대비형",
+      },
+      {
+        title: "영어 & 수학 내신/기초 수업",
+        description:
+          "초·중·고 학생의 영어와 수학 기초, 학교 과제, 국제 커리큘럼 적응, 시험 대비를 1:1 맞춤형으로 지원합니다.",
+        tag: "기초 강화형",
+      },
+    ],
+    methodIntro: "진행 방식",
+    methodTitle: "진단부터 수업, 피드백까지 체계적으로 관리합니다.",
+    process: [
+      [
+        "학업 진단",
+        "학생의 현재 수준, 학교 커리큘럼, 목표 점수, 준비 기간, 학습 성향을 먼저 파악합니다.",
+      ],
+      [
+        "맞춤 로드맵 설계",
+        "AP 5점, SAT 점수 향상, 내신 관리, 입학 준비 등 목표에 따라 구체적인 학습 계획을 세웁니다.",
+      ],
+      [
+        "1:1 멘토 매칭",
+        "과목 전문성, 수업 스타일, 학생 성향을 고려해 가장 적합한 멘토를 매칭합니다.",
+      ],
+      [
+        "진행 리포트",
+        "수업 내용, 숙제, 약점, 다음 수업 계획을 학부모님께 명확하게 전달합니다.",
+      ],
+    ],
+    whyIntro: "왜 PrimePath인가요?",
+    whyTitle: "프리미엄 수업은 체계적이고, 투명하고, 믿을 수 있어야 합니다.",
+    whyText:
+      "학부모님이 수업이 잘 진행되고 있는지 추측하지 않도록, 멘토 매칭부터 학습 계획, 수업 후 피드백까지 명확하게 관리합니다.",
+    trustPoints: [
+      "검증된 학업 배경과 과목 실력",
+      "국제 커리큘럼 학생을 위한 영어 가능 멘토",
+      "대형 학원식 수업이 아닌 1:1 맞춤 플랜",
+      "학부모 소통 및 수업 진행 리포트",
+      "학생과 맞지 않을 경우 멘토 재매칭 지원",
+      "고가 대형 학원의 부담을 줄인 프리미엄 대안",
+    ],
+    parentTab: "학부모님께",
+    studentTab: "학생에게",
+    parentTitle:
+      "우리 아이가 무엇을 배우고, 어디에서 어려움을 겪는지 명확하게 확인하세요.",
+    parentText:
+      "PrimePath는 대형 학원 수업이나 무작위 과외 매칭이 아닌, 체계적인 1:1 프리미엄 학습 관리를 원하는 학부모님을 위해 설계되었습니다.",
+    parentCards: [
+      "신뢰 가능한 멘토 검증",
+      "명확한 학부모 소통",
+      "커리큘럼 맞춤 수업",
+      "목표 중심 학습 플랜",
+    ],
+    studentTitle:
+      "숙제만 도와주는 선생님이 아닌, 목표를 이해하는 멘토와 공부하세요.",
+    studentText:
+      "AP, SAT, 입학 인터뷰, 학교 영어와 수학까지 학생의 목표에 맞춰 현실적인 계획을 세우고 꾸준히 관리합니다.",
+    studentSupport: "학생 지원 내용",
+    studentItems: [
+      "맞춤형 학습 계획",
+      "약점 중심 문제 연습",
+      "숙제 및 시험 대비",
+      "영어 말하기와 writing 자신감 향상",
+    ],
+    consultIntro: "상담 신청",
+    consultTitle: "1:1 비공개 상담을 신청하세요.",
+    consultText:
+      "학생의 학년, 학교 유형, 목표 과목, 준비 기간, 현재 수준을 알려주시면 가장 적합한 수업 구조와 멘토 프로필을 추천드립니다.",
+    consultCardTitle: "간단한 상담 신청부터 시작하세요.",
+    consultCardText:
+      "학생의 학년, 학교 유형, 커리큘럼, 목표 과목, 희망 일정, 학습 목표를 확인한 뒤 가장 적합한 1:1 수업 방향을 추천드립니다.",
+    consultSteps: ["상담 신청", "학습 상황 확인", "수업 방향 추천"],
+    submit: "상담 신청 제출하기",
+    formNote:
+      "상담 신청 버튼을 누르면 Google Form으로 이동하여 상담 요청을 제출하실 수 있습니다.",
+    footer: "AP · SAT · 입학 준비 · 영어 · 수학 · 1:1 프리미엄 멘토링",
+  },
+};
+
+const processIcons = [ClipboardList, Target, GraduationCap, FileText];
+const parentIcons = [ShieldCheck, MessageCircle, BookOpen, Star];
+
+function LanguageGate({ onSelect }) {
+  return (
+    <div className="min-h-screen bg-[#F7F3EA] text-[#18212F]">
+      <div className="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 py-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="w-full rounded-[2.5rem] border border-black/5 bg-white/80 p-8 text-center shadow-2xl shadow-black/10 backdrop-blur md:p-14"
+        >
+          <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#18212F] text-white shadow-lg shadow-black/10">
+            <Sparkles size={25} />
+          </div>
+
+          <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#9A6A2F]">
+            PrimePath Education
+          </p>
+
+          <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-6xl">
+            Choose your language
+          </h1>
+
+          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-gray-600">
+            Select the language you would like to use for your consultation and
+            website experience.
+          </p>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-2">
+            <button
+              onClick={() => onSelect("en")}
+              className="group rounded-[2rem] border border-black/5 bg-[#F7F3EA] p-8 text-left shadow-sm transition hover:-translate-y-1 hover:bg-white hover:shadow-xl hover:shadow-black/10"
+            >
+              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#18212F] text-white">
+                EN
+              </div>
+              <h2 className="text-3xl font-semibold tracking-tight">
+                English Speakers
+              </h2>
+              <p className="mt-4 leading-7 text-gray-600">
+                For international school families, foreign students, and
+                English-speaking parents.
+              </p>
+              <div className="mt-6 inline-flex items-center text-sm font-bold text-[#9A6A2F]">
+                Continue in English <ArrowRight className="ml-2" size={17} />
+              </div>
+            </button>
+
+            <button
+              onClick={() => onSelect("ko")}
+              className="group rounded-[2rem] border border-black/5 bg-[#18212F] p-8 text-left text-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-black/15"
+            >
+              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white">
+                KR
+              </div>
+              <h2 className="text-3xl font-semibold tracking-tight">
+                한국어 상담
+              </h2>
+              <p className="mt-4 leading-7 text-white/70">
+                국내 학부모님과 한국어 상담을 원하시는 분들을 위한 페이지입니다.
+              </p>
+              <div className="mt-6 inline-flex items-center text-sm font-bold text-[#D9C29A]">
+                한국어로 보기 <ArrowRight className="ml-2" size={17} />
+              </div>
+            </button>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
+export default function PremiumTutoringLandingPage() {
+  const [language, setLanguage] = useState(null);
+  const [audience, setAudience] = useState("parent");
+
+  if (!language) {
+    return <LanguageGate onSelect={setLanguage} />;
+  }
+
+  const t = content[language];
+  const navLinks = ["#programs", "#process", "#trust", "#consultation"];
+  const oppositeLanguage = language === "en" ? "ko" : "en";
+  const activeFormLink = formLinks[language];
+
+  return (
+    <div className="min-h-screen bg-[#F7F3EA] text-[#18212F]">
+      <header className="sticky top-0 z-50 border-b border-black/5 bg-[#F7F3EA]/90 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#18212F] text-white shadow-lg shadow-black/10">
+              <Sparkles size={19} />
+            </div>
+            <div>
+              <p className="text-lg font-bold tracking-tight">{t.brand}</p>
+              <p className="hidden text-xs tracking-wide text-gray-500 sm:block">
+                {t.subBrand}
+              </p>
+            </div>
+          </div>
+
+          <nav className="hidden items-center gap-8 text-sm font-medium text-gray-600 md:flex">
+            {t.nav.map((item, index) => (
+              <a
+                key={item}
+                href={navLinks[index]}
+                className="hover:text-[#18212F]"
+              >
+                {item}
+              </a>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setLanguage(oppositeLanguage)}
+              className="rounded-full border border-black/10 bg-white/70 px-4 py-2.5 text-sm font-semibold text-[#18212F] shadow-sm transition hover:bg-white"
+            >
+              {t.switchLang}
+            </button>
+
+            <a
+              href={activeFormLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-[#18212F] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-black/10 transition hover:bg-[#0F172A]"
+            >
+              {t.book}
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section className="relative overflow-hidden px-6 pb-20 pt-20 md:pb-28 md:pt-28">
+          <div className="absolute left-1/2 top-0 h-[560px] w-[560px] -translate-x-1/2 rounded-full bg-[#D9C29A]/40 blur-3xl" />
+          <div className="absolute right-0 top-24 h-80 w-80 rounded-full bg-[#9FB7C9]/25 blur-3xl" />
+
+          <div className="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65 }}
+            >
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm">
+                <Award size={16} className="text-[#9A6A2F]" />
+                {t.heroBadge}
+              </div>
+
+              <h1 className="max-w-4xl text-5xl font-semibold leading-[1.04] tracking-tight md:text-7xl">
+                {t.heroTitle}
+              </h1>
+
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
+                {t.heroText}
+              </p>
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <a
+                  href={activeFormLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-full bg-[#18212F] px-7 py-4 text-sm font-semibold text-white shadow-xl shadow-black/10 transition hover:bg-[#0F172A]"
+                >
+                  {t.request} <ArrowRight className="ml-2" size={18} />
+                </a>
+
+                <a
+                  href="#programs"
+                  className="inline-flex items-center justify-center rounded-full border border-black/10 bg-white/75 px-7 py-4 text-sm font-semibold text-[#18212F] shadow-sm transition hover:bg-white"
+                >
+                  {t.viewPrograms}
+                </a>
+              </div>
+
+              <div className="mt-10 grid max-w-2xl grid-cols-3 gap-4">
+                {t.stats.map(([number, label]) => (
+                  <div
+                    key={label}
+                    className="rounded-3xl border border-black/5 bg-white/65 p-4 shadow-sm"
+                  >
+                    <p className="text-2xl font-bold text-[#18212F]">
+                      {number}
+                    </p>
+                    <p className="mt-1 text-sm text-gray-600">{label}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="relative"
+            >
+              <div className="rounded-[2rem] border border-white/70 bg-white/85 p-6 shadow-2xl shadow-black/10 backdrop-blur md:p-8">
+                <div className="mb-7 flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      {t.previewSmall}
+                    </p>
+                    <h3 className="mt-1 text-2xl font-semibold tracking-tight">
+                      {t.previewTitle}
+                    </h3>
+                  </div>
+
+                  <div className="rounded-full bg-[#E9F7EF] px-3 py-1 text-sm font-semibold text-[#247A4D]">
+                    {t.premiumMatch}
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  {t.planRows.map(([label, value]) => (
+                    <div key={label} className="rounded-3xl bg-[#F7F3EA] p-5">
+                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#9A6A2F]">
+                        {label}
+                      </p>
+                      <p className="mt-2 font-medium leading-7 text-[#18212F]">
+                        {value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 rounded-[1.7rem] bg-[#18212F] p-5 text-white">
+                  <div className="flex gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/10">
+                      <GraduationCap size={22} />
+                    </div>
+                    <div>
+                      <p className="font-semibold">{t.mentorTitle}</p>
+                      <p className="mt-1 text-sm leading-6 text-white/70">
+                        {t.mentorText}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        <section id="programs" className="bg-white px-6 py-20">
+          <div className="mx-auto max-w-7xl">
+            <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+              <div className="max-w-2xl">
+                <p className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-[#9A6A2F]">
+                  {t.programsIntro}
+                </p>
+                <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
+                  {t.programsTitle}
+                </h2>
+              </div>
+              <p className="max-w-md text-lg leading-8 text-gray-600">
+                {t.programsText}
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-5 md:grid-cols-2">
+              {t.programs.map((program) => (
+                <div
+                  key={program.title}
+                  className="group rounded-[2rem] border border-black/5 bg-[#F7F3EA] p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-black/10"
+                >
+                  <div className="mb-5 inline-flex rounded-full bg-white px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[#9A6A2F]">
+                    {program.tag}
+                  </div>
+                  <h3 className="text-2xl font-semibold tracking-tight">
+                    {program.title}
+                  </h3>
+                  <p className="mt-4 leading-8 text-gray-600">
+                    {program.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="process" className="px-6 py-20">
+          <div className="mx-auto max-w-7xl">
+            <div className="max-w-2xl">
+              <p className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-[#9A6A2F]">
+                {t.methodIntro}
+              </p>
+              <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
+                {t.methodTitle}
+              </h2>
+            </div>
+
+            <div className="mt-12 grid gap-5 md:grid-cols-4">
+              {t.process.map(([title, text], index) => {
+                const Icon = processIcons[index];
+                return (
+                  <div
+                    key={title}
+                    className="rounded-[2rem] bg-white p-6 shadow-sm"
+                  >
+                    <div className="mb-5 flex items-center justify-between">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F7F3EA] text-[#9A6A2F]">
+                        <Icon size={22} />
+                      </div>
+                      <span className="text-sm font-bold text-gray-300">
+                        0{index + 1}
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-semibold">{title}</h3>
+                    <p className="mt-3 leading-7 text-gray-600">{text}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section id="trust" className="bg-[#18212F] px-6 py-20 text-white">
+          <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+            <div>
+              <p className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-[#D9C29A]">
+                {t.whyIntro}
+              </p>
+              <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
+                {t.whyTitle}
+              </h2>
+              <p className="mt-6 text-lg leading-8 text-white/70">
+                {t.whyText}
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {t.trustPoints.map((point) => (
+                <div
+                  key={point}
+                  className="rounded-3xl bg-white/8 p-5 ring-1 ring-white/10"
+                >
+                  <CheckCircle className="mb-4 text-[#D9C29A]" size={22} />
+                  <p className="font-medium leading-7">{point}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-white px-6 py-20">
+          <div className="mx-auto max-w-7xl">
+            <div className="rounded-[2rem] bg-[#F7F3EA] p-8 md:p-12">
+              <div className="mb-8 flex gap-3">
+                <button
+                  onClick={() => setAudience("parent")}
+                  className={`rounded-full px-5 py-2.5 text-sm font-semibold transition ${
+                    audience === "parent"
+                      ? "bg-[#18212F] text-white"
+                      : "bg-white text-gray-600"
+                  }`}
+                >
+                  {t.parentTab}
+                </button>
+
+                <button
+                  onClick={() => setAudience("student")}
+                  className={`rounded-full px-5 py-2.5 text-sm font-semibold transition ${
+                    audience === "student"
+                      ? "bg-[#18212F] text-white"
+                      : "bg-white text-gray-600"
+                  }`}
+                >
+                  {t.studentTab}
+                </button>
+              </div>
+
+              {audience === "parent" ? (
+                <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+                  <div>
+                    <h2 className="text-4xl font-semibold tracking-tight">
+                      {t.parentTitle}
+                    </h2>
+                    <p className="mt-5 text-lg leading-8 text-gray-600">
+                      {t.parentText}
+                    </p>
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {t.parentCards.map((text, index) => {
+                      const Icon = parentIcons[index];
+                      return (
+                        <div
+                          key={text}
+                          className="rounded-3xl bg-white p-5 shadow-sm"
+                        >
+                          <Icon className="mb-4 text-[#9A6A2F]" />
+                          <p className="font-semibold">{text}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : (
+                <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+                  <div>
+                    <h2 className="text-4xl font-semibold tracking-tight">
+                      {t.studentTitle}
+                    </h2>
+                    <p className="mt-5 text-lg leading-8 text-gray-600">
+                      {t.studentText}
+                    </p>
+                  </div>
+
+                  <div className="rounded-[2rem] bg-white p-6 shadow-sm">
+                    <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#9A6A2F]">
+                      {t.studentSupport}
+                    </p>
+                    <ul className="mt-5 space-y-4 text-gray-700">
+                      {t.studentItems.map((item) => (
+                        <li key={item} className="flex gap-3">
+                          <CheckCircle
+                            className="mt-0.5 shrink-0 text-[#9A6A2F]"
+                            size={19}
+                          />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+
+        <section id="consultation" className="px-6 py-20">
+          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+            <div>
+              <p className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-[#9A6A2F]">
+                {t.consultIntro}
+              </p>
+              <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
+                {t.consultTitle}
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-gray-600">
+                {t.consultText}
+              </p>
+            </div>
+
+            <div className="rounded-[2rem] border border-black/5 bg-white p-8 shadow-xl shadow-black/5 md:p-10">
+              <div className="mb-8 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#F7F3EA] text-[#9A6A2F]">
+                <MessageCircle size={26} />
+              </div>
+
+              <h3 className="text-3xl font-semibold tracking-tight">
+                {t.consultCardTitle}
+              </h3>
+
+              <p className="mt-4 text-lg leading-8 text-gray-600">
+                {t.consultCardText}
+              </p>
+
+              <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                {t.consultSteps.map((step, index) => (
+                  <div key={step} className="rounded-3xl bg-[#F7F3EA] p-5">
+                    <p className="text-sm font-bold text-[#9A6A2F]">
+                      0{index + 1}
+                    </p>
+                    <p className="mt-2 font-semibold text-[#18212F]">{step}</p>
+                  </div>
+                ))}
+              </div>
+
+              <a
+                href={activeFormLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-[#18212F] px-7 py-4 text-center text-sm font-semibold text-white transition hover:bg-[#0F172A]"
+              >
+                {t.submit} <ArrowRight className="ml-2" size={18} />
+              </a>
+
+              <p className="mt-4 text-center text-xs leading-6 text-gray-500">
+                {t.formNote}
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-black/5 px-6 py-10">
+        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 text-sm text-gray-500 md:flex-row">
+          <p>© 2026 {t.brand}. All rights reserved.</p>
+          <p>{t.footer}</p>
+        </div>
+      </footer>
+    </div>
+  );
+}
