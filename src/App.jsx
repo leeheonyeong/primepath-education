@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -10,10 +10,18 @@ import {
   GraduationCap,
   MessageCircle,
   ShieldCheck,
-  Sparkles,
   Star,
   Target,
+  Trophy,
 } from "lucide-react";
+
+import daltonAdmission from "./assets/results/dalton-admission-success.png";
+import parentFeedback from "./assets/results/parent-feedback.png";
+import sat1590 from "./assets/results/sat-1590.png";
+import apLang5 from "./assets/results/AP-Lang-5.png";
+import apLit5 from "./assets/results/AP-Lit-5.png";
+import apPsych5 from "./assets/results/AP-Psych-5.png";
+import apUsh5 from "./assets/results/AP-USH-5.png";
 
 const formLinks = {
   en: "https://docs.google.com/forms/d/e/1FAIpQLScfkCpsJgIqkLJju_n4mnwXhdEVOS_OXDhOd40aDUdrZjkJ0g/viewform?usp=header",
@@ -24,28 +32,61 @@ const content = {
   en: {
     brand: "PrimePath Education",
     subBrand: "Premium 1:1 Academic Mentoring",
-    nav: ["Programs", "Process", "Why us", "Consultation"],
+    nav: ["Programs", "Process", "Why us", "Results", "Consultation"],
     book: "Book Consultation",
     switchLang: "한국어",
-    heroBadge: "AP · SAT · Admissions Prep · English · Math",
-    heroTitle: "Premium 1:1 academic mentoring for students with ambitious goals.",
+    heroBadge: "AP · SAT · SSAT · Admissions · English · Math",
+    heroTitle:
+      "Premium 1:1 academic mentoring for students with ambitious goals.",
     heroText:
-      "We help students prepare for AP, Digital SAT, international school admissions, English, and math through personalized tutoring, careful mentor matching, and parent-facing progress management.",
+      "We help students prepare for AP, Digital SAT, SSAT, international school admissions, English, and math through personalized tutoring, careful mentor matching, and parent-facing progress management.",
     request: "Request a Consultation",
     viewPrograms: "View Programs",
     stats: [
       ["1:1", "Private classes"],
-      ["AP/SAT", "Targeted prep"],
+      ["6+", "Programs offered"],
       ["Reports", "Parent updates"],
     ],
-    previewSmall: "Student plan preview",
-    previewTitle: "Personalized Roadmap",
-    premiumMatch: "Premium Match",
-    planRows: [
-      ["Goal", "AP Calculus BC 5 + SAT Math improvement"],
-      ["Student", "International school Grade 10"],
-      ["Focus", "Weak-point analysis, timed practice, weekly review"],
-      ["Parent Update", "Lesson report + homework plan after each class"],
+    roadmapSmall: "Sample student roadmap",
+    roadmapTitle: "What a personalized plan can look like",
+    premiumMatch: "Custom Plan",
+    roadmapSamples: [
+      {
+        title: "AP + SAT Student",
+        rows: [
+          ["Goal", "AP Calculus BC 5 + SAT Math improvement"],
+          ["Student", "International school Grade 10"],
+          ["Focus", "Weak-point analysis, timed practice, weekly review"],
+          ["Parent Update", "Lesson report + homework plan after each class"],
+        ],
+      },
+      {
+        title: "SSAT Applicant",
+        rows: [
+          ["Goal", "SSAT verbal, reading, and vocabulary improvement"],
+          ["Student", "Grade 7 student preparing for admissions"],
+          ["Focus", "Vocabulary building, reading accuracy, test strategy"],
+          ["Parent Update", "Targeted vocabulary homework + progress tracking"],
+        ],
+      },
+      {
+        title: "Admissions Prep Student",
+        rows: [
+          ["Goal", "International school interview and writing preparation"],
+          ["Student", "Korean middle school student applying abroad or in Korea"],
+          ["Focus", "Self-introduction, interview speaking, writing assessment"],
+          ["Parent Update", "Mock interview feedback + weekly readiness notes"],
+        ],
+      },
+      {
+        title: "English Writing Student",
+        rows: [
+          ["Goal", "Improve academic writing and school performance"],
+          ["Student", "Middle school student needing stronger writing foundation"],
+          ["Focus", "Paragraph structure, grammar correction, guided writing"],
+          ["Parent Update", "Writing corrections + growth notes"],
+        ],
+      },
     ],
     mentorTitle: "Matched Academic Mentor",
     mentorText:
@@ -68,15 +109,27 @@ const content = {
         tag: "Strategy-driven",
       },
       {
+        title: "SSAT Prep",
+        description:
+          "Private SSAT support focused on vocabulary, reading comprehension, verbal reasoning, writing, and test strategy for students preparing for private or international school admissions.",
+        tag: "Admissions test",
+      },
+      {
         title: "International School Admissions Prep",
         description:
           "Interview practice, writing support, entrance assessment preparation, and school-fit guidance for students applying to international schools in Korea or abroad.",
         tag: "Admissions-ready",
       },
       {
-        title: "English & Math Support",
+        title: "English Writing & Speaking",
         description:
-          "1:1 academic support for elementary, middle, and high school students who need stronger fundamentals, schoolwork support, or international curriculum alignment.",
+          "Structured English support for students who need stronger academic writing, speaking confidence, interview answers, vocabulary, and reading comprehension.",
+        tag: "English fluency",
+      },
+      {
+        title: "Math Support",
+        description:
+          "1:1 math support for elementary, middle, and high school students who need stronger fundamentals, schoolwork support, or international curriculum alignment.",
         tag: "Foundation-building",
       },
     ],
@@ -89,7 +142,7 @@ const content = {
       ],
       [
         "Personalized Roadmap",
-        "Each student receives a clear learning plan based on goals such as AP 5, SAT improvement, school GPA, or entrance preparation.",
+        "Each student receives a clear learning plan based on goals such as AP 5, SAT improvement, SSAT prep, school GPA, or entrance preparation.",
       ],
       [
         "Matched 1:1 Mentor",
@@ -127,7 +180,7 @@ const content = {
     studentTitle:
       "Study with a mentor who understands your goals, not just your homework.",
     studentText:
-      "Whether you are preparing for AP exams, SAT, admissions interviews, or school math and English, we help you build a practical plan and stay accountable.",
+      "Whether you are preparing for AP exams, SAT, SSAT, admissions interviews, or school math and English, we help you build a practical plan and stay accountable.",
     studentSupport: "Student support includes",
     studentItems: [
       "Customized study plan",
@@ -146,34 +199,67 @@ const content = {
     submit: "Submit Consultation Request",
     formNote:
       "Click the consultation button to submit your request through our Google Form.",
-    footer: "AP · SAT · Admissions Prep · English · Math · 1:1 Premium Mentoring",
+    footer:
+      "AP · SAT · SSAT · Admissions Prep · English · Math · 1:1 Premium Mentoring",
   },
 
   ko: {
     brand: "PrimePath Education",
     subBrand: "프리미엄 1:1 맞춤 학습 멘토링",
-    nav: ["프로그램", "진행 방식", "신뢰 포인트", "상담 신청"],
+    nav: ["프로그램", "진행 방식", "신뢰 포인트", "성과", "상담 신청"],
     book: "상담 신청",
     switchLang: "English",
-    heroBadge: "AP · SAT · 입학 준비 · 영어 · 수학",
+    heroBadge: "AP · SAT · SSAT · 입학 준비 · 영어 · 수학",
     heroTitle: "목표가 뚜렷한 학생을 위한 프리미엄 1:1 학습 멘토링.",
     heroText:
-      "AP, Digital SAT, 국제학교 입학 준비, 영어, 수학 수업을 학생의 수준과 목표에 맞춰 1:1로 설계하고, 적합한 멘토 매칭과 학부모 진행 보고까지 함께 관리합니다.",
+      "AP, Digital SAT, SSAT, 국제학교 입학 준비, 영어, 수학 수업을 학생의 수준과 목표에 맞춰 1:1로 설계하고, 적합한 멘토 매칭과 학부모 진행 보고까지 함께 관리합니다.",
     request: "상담 신청하기",
     viewPrograms: "프로그램 보기",
     stats: [
       ["1:1", "개인 맞춤 수업"],
-      ["AP/SAT", "목표 점수 대비"],
+      ["6+", "제공 프로그램"],
       ["리포트", "학부모 피드백"],
     ],
-    previewSmall: "학생 학습 플랜 예시",
-    previewTitle: "맞춤형 로드맵",
-    premiumMatch: "프리미엄 매칭",
-    planRows: [
-      ["목표", "AP Calculus BC 5점 + SAT Math 향상"],
-      ["학생", "국제학교 Grade 10"],
-      ["집중 영역", "약점 분석, 시간 관리 연습, 주간 복습"],
-      ["학부모 리포트", "수업 내용 + 숙제 플랜 전달"],
+    roadmapSmall: "학생 맞춤 플랜 예시",
+    roadmapTitle: "개인별 로드맵은 이렇게 설계됩니다",
+    premiumMatch: "맞춤 플랜",
+    roadmapSamples: [
+      {
+        title: "AP + SAT 학생",
+        rows: [
+          ["목표", "AP Calculus BC 5점 + SAT Math 향상"],
+          ["학생", "국제학교 Grade 10"],
+          ["집중 영역", "약점 분석, 시간 관리 연습, 주간 복습"],
+          ["학부모 리포트", "수업 내용 + 숙제 플랜 전달"],
+        ],
+      },
+      {
+        title: "SSAT 준비 학생",
+        rows: [
+          ["목표", "SSAT Verbal, Reading, Vocabulary 향상"],
+          ["학생", "입학 시험을 준비하는 Grade 7 학생"],
+          ["집중 영역", "어휘, 독해 정확도, 문제풀이 전략"],
+          ["학부모 리포트", "목표 단어 숙제 + 진도 확인"],
+        ],
+      },
+      {
+        title: "국제학교 입학 준비 학생",
+        rows: [
+          ["목표", "국제학교 인터뷰 및 writing assessment 준비"],
+          ["학생", "국내외 국제학교 지원을 준비하는 중학생"],
+          ["집중 영역", "자기소개, 인터뷰 답변, writing 연습"],
+          ["학부모 리포트", "모의 인터뷰 피드백 + 준비도 점검"],
+        ],
+      },
+      {
+        title: "영어 Writing 학생",
+        rows: [
+          ["목표", "학업 writing 실력과 학교 수행 향상"],
+          ["학생", "writing 기초를 보완해야 하는 중학생"],
+          ["집중 영역", "문단 구조, 문법 교정, guided writing"],
+          ["학부모 리포트", "첨삭 내용 + 성장 포인트 전달"],
+        ],
+      },
     ],
     mentorTitle: "매칭된 전문 학습 멘토",
     mentorText:
@@ -196,15 +282,27 @@ const content = {
         tag: "전략 중심",
       },
       {
+        title: "SSAT 대비",
+        description:
+          "사립학교 또는 국제학교 입학을 준비하는 학생을 위해 vocabulary, reading comprehension, verbal reasoning, writing, 시험 전략을 1:1로 지원합니다.",
+        tag: "입학 시험",
+      },
+      {
         title: "국제학교 입학 준비",
         description:
           "국내외 국제학교 지원 학생을 위한 인터뷰 연습, writing 지원, entrance assessment 대비, 학교별 준비 전략을 제공합니다.",
         tag: "입학 대비형",
       },
       {
-        title: "영어 & 수학 내신/기초 수업",
+        title: "영어 Writing & Speaking",
         description:
-          "초·중·고 학생의 영어와 수학 기초, 학교 과제, 국제 커리큘럼 적응, 시험 대비를 1:1 맞춤형으로 지원합니다.",
+          "학업 writing, speaking 자신감, 인터뷰 답변, vocabulary, reading comprehension을 학생 수준에 맞춰 체계적으로 지도합니다.",
+        tag: "영어 실력 강화",
+      },
+      {
+        title: "수학 수업",
+        description:
+          "초·중·고 학생의 수학 기초, 학교 과제, 국제 커리큘럼 적응, 시험 대비를 1:1 맞춤형으로 지원합니다.",
         tag: "기초 강화형",
       },
     ],
@@ -217,7 +315,7 @@ const content = {
       ],
       [
         "맞춤 로드맵 설계",
-        "AP 5점, SAT 점수 향상, 내신 관리, 입학 준비 등 목표에 따라 구체적인 학습 계획을 세웁니다.",
+        "AP 5점, SAT/SSAT 점수 향상, 내신 관리, 입학 준비 등 목표에 따라 구체적인 학습 계획을 세웁니다.",
       ],
       [
         "1:1 멘토 매칭",
@@ -255,7 +353,7 @@ const content = {
     studentTitle:
       "숙제만 도와주는 선생님이 아닌, 목표를 이해하는 멘토와 공부하세요.",
     studentText:
-      "AP, SAT, 입학 인터뷰, 학교 영어와 수학까지 학생의 목표에 맞춰 현실적인 계획을 세우고 꾸준히 관리합니다.",
+      "AP, SAT, SSAT, 입학 인터뷰, 학교 영어와 수학까지 학생의 목표에 맞춰 현실적인 계획을 세우고 꾸준히 관리합니다.",
     studentSupport: "학생 지원 내용",
     studentItems: [
       "맞춤형 학습 계획",
@@ -274,12 +372,31 @@ const content = {
     submit: "상담 신청 제출하기",
     formNote:
       "상담 신청 버튼을 누르면 Google Form으로 이동하여 상담 요청을 제출하실 수 있습니다.",
-    footer: "AP · SAT · 입학 준비 · 영어 · 수학 · 1:1 프리미엄 멘토링",
+    footer:
+      "AP · SAT · SSAT · 입학 준비 · 영어 · 수학 · 1:1 프리미엄 멘토링",
   },
 };
 
 const processIcons = [ClipboardList, Target, GraduationCap, FileText];
 const parentIcons = [ShieldCheck, MessageCircle, BookOpen, Star];
+const navLinks = [
+  "#programs",
+  "#process",
+  "#why-us",
+  "#results",
+  "#consultation",
+];
+const logoPath = "/primepath-logo.png";
+
+function BrandLogo({ size = "h-10 w-10", rounded = "rounded-2xl" }) {
+  return (
+    <img
+      src={logoPath}
+      alt="PrimePath Education logo"
+      className={`${size} ${rounded} object-cover shadow-lg shadow-black/10`}
+    />
+  );
+}
 
 function LanguageGate({ onSelect }) {
   return (
@@ -291,8 +408,8 @@ function LanguageGate({ onSelect }) {
           transition={{ duration: 0.6 }}
           className="w-full rounded-[2.5rem] border border-black/5 bg-white/80 p-8 text-center shadow-2xl shadow-black/10 backdrop-blur md:p-14"
         >
-          <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#18212F] text-white shadow-lg shadow-black/10">
-            <Sparkles size={25} />
+          <div className="mx-auto mb-6 flex items-center justify-center">
+            <BrandLogo size="h-14 w-14" rounded="rounded-2xl" />
           </div>
 
           <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#9A6A2F]">
@@ -339,7 +456,8 @@ function LanguageGate({ onSelect }) {
                 한국어 상담
               </h2>
               <p className="mt-4 leading-7 text-white/70">
-                국내 학부모님과 한국어 상담을 원하시는 분들을 위한 페이지입니다.
+                국내 학부모님과 한국어 상담을 원하시는 분들을 위한
+                페이지입니다.
               </p>
               <div className="mt-6 inline-flex items-center text-sm font-bold text-[#D9C29A]">
                 한국어로 보기 <ArrowRight className="ml-2" size={17} />
@@ -355,24 +473,38 @@ function LanguageGate({ onSelect }) {
 export default function PremiumTutoringLandingPage() {
   const [language, setLanguage] = useState(null);
   const [audience, setAudience] = useState("parent");
+  const [sampleIndex, setSampleIndex] = useState(0);
+
+  useEffect(() => {
+    if (!language) return;
+    setSampleIndex(0);
+  }, [language]);
+
+  useEffect(() => {
+    if (!language) return;
+    const timer = setInterval(() => {
+      setSampleIndex(
+        (current) => (current + 1) % content[language].roadmapSamples.length
+      );
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [language]);
 
   if (!language) {
     return <LanguageGate onSelect={setLanguage} />;
   }
 
   const t = content[language];
-  const navLinks = ["#programs", "#process", "#trust", "#consultation"];
   const oppositeLanguage = language === "en" ? "ko" : "en";
   const activeFormLink = formLinks[language];
+  const activeSample = t.roadmapSamples[sampleIndex];
 
   return (
     <div className="min-h-screen bg-[#F7F3EA] text-[#18212F]">
       <header className="sticky top-0 z-50 border-b border-black/5 bg-[#F7F3EA]/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#18212F] text-white shadow-lg shadow-black/10">
-              <Sparkles size={19} />
-            </div>
+            <BrandLogo size="h-10 w-10" rounded="rounded-2xl" />
             <div>
               <p className="text-lg font-bold tracking-tight">{t.brand}</p>
               <p className="hidden text-xs tracking-wide text-gray-500 sm:block">
@@ -477,14 +609,17 @@ export default function PremiumTutoringLandingPage() {
               className="relative"
             >
               <div className="rounded-[2rem] border border-white/70 bg-white/85 p-6 shadow-2xl shadow-black/10 backdrop-blur md:p-8">
-                <div className="mb-7 flex items-center justify-between">
+                <div className="mb-7 flex items-start justify-between gap-4">
                   <div>
                     <p className="text-sm font-medium text-gray-500">
-                      {t.previewSmall}
+                      {t.roadmapSmall}
                     </p>
                     <h3 className="mt-1 text-2xl font-semibold tracking-tight">
-                      {t.previewTitle}
+                      {t.roadmapTitle}
                     </h3>
+                    <p className="mt-2 text-sm font-semibold text-[#9A6A2F]">
+                      {activeSample.title}
+                    </p>
                   </div>
 
                   <div className="rounded-full bg-[#E9F7EF] px-3 py-1 text-sm font-semibold text-[#247A4D]">
@@ -492,8 +627,14 @@ export default function PremiumTutoringLandingPage() {
                   </div>
                 </div>
 
-                <div className="space-y-4">
-                  {t.planRows.map(([label, value]) => (
+                <motion.div
+                  key={`${language}-${sampleIndex}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35 }}
+                  className="space-y-4"
+                >
+                  {activeSample.rows.map(([label, value]) => (
                     <div key={label} className="rounded-3xl bg-[#F7F3EA] p-5">
                       <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#9A6A2F]">
                         {label}
@@ -502,6 +643,21 @@ export default function PremiumTutoringLandingPage() {
                         {value}
                       </p>
                     </div>
+                  ))}
+                </motion.div>
+
+                <div className="mt-5 flex justify-center gap-2">
+                  {t.roadmapSamples.map((sample, index) => (
+                    <button
+                      key={sample.title}
+                      onClick={() => setSampleIndex(index)}
+                      className={`h-2 rounded-full transition-all ${
+                        index === sampleIndex
+                          ? "w-8 bg-[#9A6A2F]"
+                          : "w-2 bg-gray-300"
+                      }`}
+                      aria-label={`View sample ${index + 1}`}
+                    />
                   ))}
                 </div>
 
@@ -539,7 +695,7 @@ export default function PremiumTutoringLandingPage() {
               </p>
             </div>
 
-            <div className="mt-12 grid gap-5 md:grid-cols-2">
+            <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {t.programs.map((program) => (
                 <div
                   key={program.title}
@@ -596,7 +752,7 @@ export default function PremiumTutoringLandingPage() {
           </div>
         </section>
 
-        <section id="trust" className="bg-[#18212F] px-6 py-20 text-white">
+        <section id="why-us" className="bg-[#18212F] px-6 py-20 text-white">
           <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
               <p className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-[#D9C29A]">
@@ -638,7 +794,6 @@ export default function PremiumTutoringLandingPage() {
                 >
                   {t.parentTab}
                 </button>
-
                 <button
                   onClick={() => setAudience("student")}
                   className={`rounded-full px-5 py-2.5 text-sm font-semibold transition ${
@@ -661,7 +816,6 @@ export default function PremiumTutoringLandingPage() {
                       {t.parentText}
                     </p>
                   </div>
-
                   <div className="grid gap-4 sm:grid-cols-2">
                     {t.parentCards.map((text, index) => {
                       const Icon = parentIcons[index];
@@ -687,7 +841,6 @@ export default function PremiumTutoringLandingPage() {
                       {t.studentText}
                     </p>
                   </div>
-
                   <div className="rounded-[2rem] bg-white p-6 shadow-sm">
                     <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#9A6A2F]">
                       {t.studentSupport}
@@ -710,6 +863,196 @@ export default function PremiumTutoringLandingPage() {
           </div>
         </section>
 
+        <section id="results" className="px-6 py-24">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+              <div>
+                <p className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-[#9A6A2F]">
+                  {language === "en" ? "Results & Proof" : "성과 및 증빙"}
+                </p>
+                <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
+                  {language === "en"
+                    ? "Real outcomes, backed by real evidence."
+                    : "실제 결과로 보여주는 신뢰."}
+                </h2>
+              </div>
+
+              <p className="text-lg leading-8 text-gray-600">
+                {language === "en"
+                  ? "Selected anonymized results from students and families supported through SAT, AP, international school admissions, English, and academic mentoring."
+                  : "SAT, AP, 국제학교 입학 준비, 영어 및 학습 멘토링에서 실제로 지원한 학생들의 익명화된 성과를 선별하여 보여드립니다."}
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-6 lg:grid-cols-2">
+              <div className="overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-xl shadow-black/5">
+                <div className="flex items-start gap-4 p-7">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#F7F3EA] text-[#9A6A2F]">
+                    <GraduationCap size={24} />
+                  </div>
+                  <div>
+                    <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-[#9A6A2F]">
+                      {language === "en" ? "Admissions Success" : "입학 성과"}
+                    </p>
+                    <h3 className="text-2xl font-semibold tracking-tight">
+                      {language === "en"
+                        ? "Cheongna Dalton School admission result"
+                        : "청라달튼스쿨 입학 성과"}
+                    </h3>
+                    <p className="mt-3 leading-7 text-gray-600">
+                      {language === "en"
+                        ? "Supported international school admissions preparation through interview practice, answer structuring, and writing support."
+                        : "인터뷰 연습, 답변 구성, writing 준비를 통해 국제학교 입학 준비를 지원했습니다."}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="px-7 pb-7">
+                  <div className="rounded-[1.5rem] bg-[#F7F3EA] p-3">
+                    <img
+                      src={daltonAdmission}
+                      alt="Cheongna Dalton School admission result"
+                      className="w-full rounded-[1.2rem] border border-black/10 object-cover"
+                    />
+                  </div>
+                  <p className="mt-3 text-xs leading-6 text-gray-500">
+                    {language === "en"
+                      ? "Personal details removed."
+                      : "개인정보는 삭제 또는 가림 처리되었습니다."}
+                  </p>
+                </div>
+              </div>
+
+              <div className="overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-xl shadow-black/5">
+                <div className="flex items-start gap-4 p-7">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#F7F3EA] text-[#9A6A2F]">
+                    <Trophy size={24} />
+                  </div>
+                  <div>
+                    <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-[#9A6A2F]">
+                      {language === "en" ? "SAT Result" : "SAT 성과"}
+                    </p>
+                    <h3 className="text-2xl font-semibold tracking-tight">
+                      {language === "en"
+                        ? "SAT 1590 result"
+                        : "SAT 1590점 성과"}
+                    </h3>
+                    <p className="mt-3 leading-7 text-gray-600">
+                      {language === "en"
+                        ? "Supported SAT preparation through weak-point analysis, reading accuracy, grammar review, and math strategy."
+                        : "약점 분석, 독해 정확도, 문법 리뷰, 수학 전략을 중심으로 SAT 대비를 지원했습니다."}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="px-7 pb-7">
+                  <div className="rounded-[1.5rem] bg-[#F7F3EA] p-3">
+                    <img
+                      src={sat1590}
+                      alt="SAT 1590 result"
+                      className="w-full rounded-[1.2rem] border border-black/10 object-cover"
+                    />
+                  </div>
+                  <p className="mt-3 text-xs leading-6 text-gray-500">
+                    {language === "en"
+                      ? "Personal details removed."
+                      : "개인정보는 삭제 또는 가림 처리되었습니다."}
+                  </p>
+                </div>
+              </div>
+
+              <div className="overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-xl shadow-black/5 lg:col-span-2">
+                <div className="grid gap-8 p-7 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+                  <div>
+                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F7F3EA] text-[#9A6A2F]">
+                      <Award size={24} />
+                    </div>
+                    <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-[#9A6A2F]">
+                      {language === "en" ? "AP Results" : "AP 성과"}
+                    </p>
+                    <h3 className="text-3xl font-semibold tracking-tight">
+                      {language === "en"
+                        ? "Multiple AP score 5 results"
+                        : "다수의 AP 5점 성과"}
+                    </h3>
+                    <p className="mt-4 leading-8 text-gray-600">
+                      {language === "en"
+                        ? "Supported AP preparation through concept review, essay and FRQ practice, exam strategy, and structured revision across multiple subjects."
+                        : "여러 AP 과목에서 개념 복습, essay 및 FRQ 연습, 시험 전략, 체계적인 복습을 통해 AP 대비를 지원했습니다."}
+                    </p>
+                    <p className="mt-4 text-xs leading-6 text-gray-500">
+                      {language === "en"
+                        ? "Personal details removed."
+                        : "개인정보는 삭제 또는 가림 처리되었습니다."}
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      { image: apLang5, label: "AP Language" },
+                      { image: apLit5, label: "AP Literature" },
+                      { image: apPsych5, label: "AP Psychology" },
+                      { image: apUsh5, label: "AP U.S. History" },
+                    ].map((item) => (
+                      <div
+                        key={item.label}
+                        className="rounded-[1.4rem] bg-[#F7F3EA] p-2"
+                      >
+                        <img
+                          src={item.image}
+                          alt={`${item.label} score 5 result`}
+                          className="h-48 w-full rounded-[1.1rem] border border-black/10 object-cover object-top"
+                        />
+                        <p className="mt-2 px-1 text-xs font-semibold text-gray-600">
+                          {item.label}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="overflow-hidden rounded-[2rem] border border-black/5 bg-[#18212F] text-white shadow-xl shadow-black/10 lg:col-span-2">
+                <div className="grid gap-8 p-7 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+                  <div>
+                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-[#D9C29A]">
+                      <MessageCircle size={24} />
+                    </div>
+                    <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-[#D9C29A]">
+                      {language === "en"
+                        ? "Parent Feedback"
+                        : "학부모 피드백"}
+                    </p>
+                    <h3 className="text-3xl font-semibold tracking-tight">
+                      {language === "en"
+                        ? "Clear progress that parents noticed"
+                        : "학부모님이 직접 느낀 수업 만족도"}
+                    </h3>
+                    <p className="mt-4 leading-8 text-white/70">
+                      {language === "en"
+                        ? "Parents valued the student’s learning experience, steady effort, and the quality of academic support."
+                        : "학생이 좋은 선생님을 만나 잘 배우고 있다는 학부모님의 피드백을 받았습니다."}
+                    </p>
+                    <p className="mt-4 text-xs leading-6 text-white/50">
+                      {language === "en"
+                        ? "Personal details removed."
+                        : "개인정보는 삭제 또는 가림 처리되었습니다."}
+                    </p>
+                  </div>
+
+                  <div className="rounded-[1.5rem] bg-white/10 p-3">
+                    <img
+                      src={parentFeedback}
+                      alt="Parent feedback message"
+                      className="w-full rounded-[1.2rem] border border-white/10 object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="consultation" className="px-6 py-20">
           <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
             <div>
@@ -728,11 +1071,9 @@ export default function PremiumTutoringLandingPage() {
               <div className="mb-8 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#F7F3EA] text-[#9A6A2F]">
                 <MessageCircle size={26} />
               </div>
-
               <h3 className="text-3xl font-semibold tracking-tight">
                 {t.consultCardTitle}
               </h3>
-
               <p className="mt-4 text-lg leading-8 text-gray-600">
                 {t.consultCardText}
               </p>
@@ -743,7 +1084,9 @@ export default function PremiumTutoringLandingPage() {
                     <p className="text-sm font-bold text-[#9A6A2F]">
                       0{index + 1}
                     </p>
-                    <p className="mt-2 font-semibold text-[#18212F]">{step}</p>
+                    <p className="mt-2 font-semibold text-[#18212F]">
+                      {step}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -767,7 +1110,7 @@ export default function PremiumTutoringLandingPage() {
 
       <footer className="border-t border-black/5 px-6 py-10">
         <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 text-sm text-gray-500 md:flex-row">
-          <p>© 2026 {t.brand}. All rights reserved.</p>
+          <p>© 2023 {t.brand}. All rights reserved.</p>
           <p>{t.footer}</p>
         </div>
       </footer>
