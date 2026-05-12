@@ -15,6 +15,7 @@ import {
   Trophy,
 } from "lucide-react";
 
+import heroTutoring from "./assets/hero-tutoring.png";
 import daltonAdmission from "./assets/results/dalton-admission-success.png";
 import parentFeedback from "./assets/results/parent-feedback.png";
 import sat1590 from "./assets/results/sat-1590.png";
@@ -35,16 +36,16 @@ const content = {
     nav: ["Programs", "Process", "Why us", "Results", "Consultation"],
     book: "Book Consultation",
     switchLang: "한국어",
-    heroBadge: "AP · SAT · SSAT · Admissions · English · Math",
+    heroBadge: "AP · SAT · SSAT · TOEFL · GED · Admissions · English · Math",
     heroTitle:
       "Premium 1:1 academic mentoring for students with ambitious goals.",
     heroText:
-      "We help students prepare for AP, Digital SAT, SSAT, international school admissions, English, and math through personalized tutoring, careful mentor matching, and parent-facing progress management.",
+      "We help students prepare for AP, Digital SAT, SSAT, TOEFL, GED, international school admissions, English, and math through personalized tutoring, careful mentor matching, and parent-facing progress management.",
     request: "Request a Consultation",
     viewPrograms: "View Programs",
     stats: [
       ["1:1", "Private classes"],
-      ["6+", "Programs offered"],
+      ["8+", "Programs offered"],
       ["Reports", "Parent updates"],
     ],
     roadmapSmall: "Sample student roadmap",
@@ -67,6 +68,15 @@ const content = {
           ["Student", "Grade 7 student preparing for admissions"],
           ["Focus", "Vocabulary building, reading accuracy, test strategy"],
           ["Parent Update", "Targeted vocabulary homework + progress tracking"],
+        ],
+      },
+      {
+        title: "TOEFL Student",
+        rows: [
+          ["Goal", "Improve TOEFL speaking, writing, and reading score"],
+          ["Student", "High school student preparing for international pathway"],
+          ["Focus", "Speaking structure, essay correction, timed practice"],
+          ["Parent Update", "Score-targeted practice report + next steps"],
         ],
       },
       {
@@ -115,6 +125,18 @@ const content = {
         tag: "Admissions test",
       },
       {
+        title: "TOEFL Prep",
+        description:
+          "1:1 TOEFL support focused on reading, listening, speaking, writing, vocabulary, timing, and score-targeted practice for students preparing for international school or university requirements.",
+        tag: "English test",
+      },
+      {
+        title: "GED Prep",
+        description:
+          "Personalized GED preparation for students who need structured support across core subjects, test strategy, study planning, and confidence-building practice.",
+        tag: "Pathway support",
+      },
+      {
         title: "International School Admissions Prep",
         description:
           "Interview practice, writing support, entrance assessment preparation, and school-fit guidance for students applying to international schools in Korea or abroad.",
@@ -142,7 +164,7 @@ const content = {
       ],
       [
         "Personalized Roadmap",
-        "Each student receives a clear learning plan based on goals such as AP 5, SAT improvement, SSAT prep, school GPA, or entrance preparation.",
+        "Each student receives a clear learning plan based on goals such as AP 5, SAT improvement, SSAT prep, TOEFL, GED, school GPA, or entrance preparation.",
       ],
       [
         "Matched 1:1 Mentor",
@@ -180,7 +202,7 @@ const content = {
     studentTitle:
       "Study with a mentor who understands your goals, not just your homework.",
     studentText:
-      "Whether you are preparing for AP exams, SAT, SSAT, admissions interviews, or school math and English, we help you build a practical plan and stay accountable.",
+      "Whether you are preparing for AP exams, SAT, SSAT, TOEFL, GED, admissions interviews, or school math and English, we help you build a practical plan and stay accountable.",
     studentSupport: "Student support includes",
     studentItems: [
       "Customized study plan",
@@ -200,7 +222,7 @@ const content = {
     formNote:
       "Click the consultation button to submit your request through our Google Form.",
     footer:
-      "AP · SAT · SSAT · Admissions Prep · English · Math · 1:1 Premium Mentoring",
+      "AP · SAT · SSAT · TOEFL · GED · Admissions Preparation · English · Math · 1:1 Premium Mentoring",
   },
 
   ko: {
@@ -209,15 +231,15 @@ const content = {
     nav: ["프로그램", "진행 방식", "신뢰 포인트", "성과", "상담 신청"],
     book: "상담 신청",
     switchLang: "English",
-    heroBadge: "AP · SAT · SSAT · 입학 준비 · 영어 · 수학",
+    heroBadge: "AP · SAT · SSAT · TOEFL · GED · 입학 준비 · 영어 · 수학",
     heroTitle: "목표가 뚜렷한 학생을 위한 프리미엄 1:1 학습 멘토링.",
     heroText:
-      "AP, Digital SAT, SSAT, 국제학교 입학 준비, 영어, 수학 수업을 학생의 수준과 목표에 맞춰 1:1로 설계하고, 적합한 멘토 매칭과 학부모 진행 보고까지 함께 관리합니다.",
+      "AP, Digital SAT, SSAT, TOEFL, GED, 국제학교 입학 준비, 영어, 수학 수업을 학생의 수준과 목표에 맞춰 1:1로 설계하고, 적합한 멘토 매칭과 학부모 진행 보고까지 함께 관리합니다.",
     request: "상담 신청하기",
     viewPrograms: "프로그램 보기",
     stats: [
       ["1:1", "개인 맞춤 수업"],
-      ["6+", "제공 프로그램"],
+      ["8+", "제공 프로그램"],
       ["리포트", "학부모 피드백"],
     ],
     roadmapSmall: "학생 맞춤 플랜 예시",
@@ -240,6 +262,15 @@ const content = {
           ["학생", "입학 시험을 준비하는 Grade 7 학생"],
           ["집중 영역", "어휘, 독해 정확도, 문제풀이 전략"],
           ["학부모 리포트", "목표 단어 숙제 + 진도 확인"],
+        ],
+      },
+      {
+        title: "TOEFL 준비 학생",
+        rows: [
+          ["목표", "TOEFL speaking, writing, reading 점수 향상"],
+          ["학생", "국제학교 또는 해외 진학을 준비하는 고등학생"],
+          ["집중 영역", "speaking 구조, essay 첨삭, 시간 관리 연습"],
+          ["학부모 리포트", "목표 점수별 연습 리포트 + 다음 단계"],
         ],
       },
       {
@@ -288,6 +319,18 @@ const content = {
         tag: "입학 시험",
       },
       {
+        title: "TOEFL 대비",
+        description:
+          "국제학교 또는 해외 대학 지원을 준비하는 학생을 위해 reading, listening, speaking, writing, vocabulary, 시간 관리, 목표 점수별 실전 연습을 1:1로 지원합니다.",
+        tag: "영어 시험",
+      },
+      {
+        title: "GED 대비",
+        description:
+          "GED 준비가 필요한 학생을 위해 주요 과목별 개념 정리, 시험 전략, 학습 계획, 실전 문제풀이를 체계적으로 지원합니다.",
+        tag: "진학 경로 지원",
+      },
+      {
         title: "국제학교 입학 준비",
         description:
           "국내외 국제학교 지원 학생을 위한 인터뷰 연습, writing 지원, entrance assessment 대비, 학교별 준비 전략을 제공합니다.",
@@ -315,7 +358,7 @@ const content = {
       ],
       [
         "맞춤 로드맵 설계",
-        "AP 5점, SAT/SSAT 점수 향상, 내신 관리, 입학 준비 등 목표에 따라 구체적인 학습 계획을 세웁니다.",
+        "AP 5점, SAT/SSAT 점수 향상, TOEFL, GED, 내신 관리, 입학 준비 등 목표에 따라 구체적인 학습 계획을 세웁니다.",
       ],
       [
         "1:1 멘토 매칭",
@@ -353,7 +396,7 @@ const content = {
     studentTitle:
       "숙제만 도와주는 선생님이 아닌, 목표를 이해하는 멘토와 공부하세요.",
     studentText:
-      "AP, SAT, SSAT, 입학 인터뷰, 학교 영어와 수학까지 학생의 목표에 맞춰 현실적인 계획을 세우고 꾸준히 관리합니다.",
+      "AP, SAT, SSAT, TOEFL, GED, 입학 인터뷰, 학교 영어와 수학까지 학생의 목표에 맞춰 현실적인 계획을 세우고 꾸준히 관리합니다.",
     studentSupport: "학생 지원 내용",
     studentItems: [
       "맞춤형 학습 계획",
@@ -373,7 +416,7 @@ const content = {
     formNote:
       "상담 신청 버튼을 누르면 Google Form으로 이동하여 상담 요청을 제출하실 수 있습니다.",
     footer:
-      "AP · SAT · SSAT · 입학 준비 · 영어 · 수학 · 1:1 프리미엄 멘토링",
+      "AP · SAT · SSAT · TOEFL · GED · 입학 준비 · 영어 · 수학 · 1:1 프리미엄 멘토링",
   },
 };
 
@@ -386,6 +429,7 @@ const navLinks = [
   "#results",
   "#consultation",
 ];
+
 const logoPath = "/primepath-logo.png";
 
 function BrandLogo({ size = "h-10 w-10", rounded = "rounded-2xl" }) {
@@ -608,8 +652,16 @@ export default function PremiumTutoringLandingPage() {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="relative"
             >
-              <div className="rounded-[2rem] border border-white/70 bg-white/85 p-6 shadow-2xl shadow-black/10 backdrop-blur md:p-8">
-                <div className="mb-7 flex items-start justify-between gap-4">
+              <div className="overflow-hidden rounded-[2rem] border border-white/70 bg-white/85 p-3 shadow-2xl shadow-black/10 backdrop-blur">
+                <img
+                  src={heroTutoring}
+                  alt="PrimePath 1:1 academic mentoring session"
+                  className="h-[420px] w-full rounded-[1.6rem] object-cover object-center"
+                />
+              </div>
+
+              <div className="mt-5 rounded-[2rem] border border-white/70 bg-white/90 p-6 shadow-xl shadow-black/5 backdrop-blur">
+                <div className="mb-5 flex items-start justify-between gap-4">
                   <div>
                     <p className="text-sm font-medium text-gray-500">
                       {t.roadmapSmall}
@@ -632,14 +684,14 @@ export default function PremiumTutoringLandingPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.35 }}
-                  className="space-y-4"
+                  className="grid gap-3 sm:grid-cols-2"
                 >
                   {activeSample.rows.map(([label, value]) => (
-                    <div key={label} className="rounded-3xl bg-[#F7F3EA] p-5">
+                    <div key={label} className="rounded-3xl bg-[#F7F3EA] p-4">
                       <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#9A6A2F]">
                         {label}
                       </p>
-                      <p className="mt-2 font-medium leading-7 text-[#18212F]">
+                      <p className="mt-2 text-sm font-medium leading-6 text-[#18212F]">
                         {value}
                       </p>
                     </div>
@@ -659,20 +711,6 @@ export default function PremiumTutoringLandingPage() {
                       aria-label={`View sample ${index + 1}`}
                     />
                   ))}
-                </div>
-
-                <div className="mt-6 rounded-[1.7rem] bg-[#18212F] p-5 text-white">
-                  <div className="flex gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/10">
-                      <GraduationCap size={22} />
-                    </div>
-                    <div>
-                      <p className="font-semibold">{t.mentorTitle}</p>
-                      <p className="mt-1 text-sm leading-6 text-white/70">
-                        {t.mentorText}
-                      </p>
-                    </div>
-                  </div>
                 </div>
               </div>
             </motion.div>
@@ -695,7 +733,7 @@ export default function PremiumTutoringLandingPage() {
               </p>
             </div>
 
-            <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
               {t.programs.map((program) => (
                 <div
                   key={program.title}
