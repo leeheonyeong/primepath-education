@@ -29,6 +29,9 @@ const formLinks = {
   ko: "https://docs.google.com/forms/d/e/1FAIpQLScmo2_eAHxpXjAcn8K4B4uQtjpziVVlKcBMZIhTLFFK2R6FSQ/viewform?usp=header",
 };
 
+const blogLink = "https://blog.naver.com/primepath_education";
+const contactEmail = "primepatheducation.kr@gmail.com";
+
 const content = {
   en: {
     brand: "PrimePath Education",
@@ -36,6 +39,8 @@ const content = {
     nav: ["Programs", "Process", "Why us", "Results", "Consultation"],
     book: "Book Consultation",
     switchLang: "한국어",
+    blog: "Naver Blog",
+    emailLabel: "Email",
     heroBadge: "AP · SAT · SSAT · TOEFL · GED · Admissions · English · Math",
     heroTitle:
       "Premium 1:1 academic mentoring for students with ambitious goals.",
@@ -56,7 +61,7 @@ const content = {
         title: "AP + SAT Student",
         rows: [
           ["Goal", "AP Calculus BC 5 + SAT Math improvement"],
-          ["Student", "International school Grade 10"],
+          ["Student", "International school student"],
           ["Focus", "Weak-point analysis, timed practice, weekly review"],
           ["Parent Update", "Lesson report + homework plan after each class"],
         ],
@@ -65,7 +70,7 @@ const content = {
         title: "SSAT Applicant",
         rows: [
           ["Goal", "SSAT verbal, reading, and vocabulary improvement"],
-          ["Student", "Grade 7 student preparing for admissions"],
+          ["Student", "Student preparing for admissions"],
           ["Focus", "Vocabulary building, reading accuracy, test strategy"],
           ["Parent Update", "Targeted vocabulary homework + progress tracking"],
         ],
@@ -74,7 +79,7 @@ const content = {
         title: "TOEFL Student",
         rows: [
           ["Goal", "Improve TOEFL speaking, writing, and reading score"],
-          ["Student", "High school student preparing for international pathway"],
+          ["Student", "Student preparing for an international pathway"],
           ["Focus", "Speaking structure, essay correction, timed practice"],
           ["Parent Update", "Score-targeted practice report + next steps"],
         ],
@@ -83,17 +88,17 @@ const content = {
         title: "Admissions Prep Student",
         rows: [
           ["Goal", "International school interview and writing preparation"],
-          ["Student", "Korean middle school student applying abroad or in Korea"],
+          ["Student", "Student applying abroad or in Korea"],
           ["Focus", "Self-introduction, interview speaking, writing assessment"],
           ["Parent Update", "Mock interview feedback + weekly readiness notes"],
         ],
       },
       {
-        title: "English Writing Student",
+        title: "English Student",
         rows: [
-          ["Goal", "Improve academic writing and school performance"],
-          ["Student", "Middle school student needing stronger writing foundation"],
-          ["Focus", "Paragraph structure, grammar correction, guided writing"],
+          ["Goal", "Improve reading, writing, and speaking confidence"],
+          ["Student", "Student needing stronger English foundation"],
+          ["Focus", "Reading comprehension, grammar, guided writing"],
           ["Parent Update", "Writing corrections + growth notes"],
         ],
       },
@@ -109,7 +114,7 @@ const content = {
       {
         title: "AP 1:1 Classes",
         description:
-          "Personalized AP tutoring for students who need concept mastery, exam strategy, and structured practice across subjects such as Calculus, Statistics, Economics, Psychology, English, Biology, Chemistry, and Physics.",
+          "Personalized AP tutoring for students who need concept mastery, exam strategy, FRQ or essay structure, and structured practice across subjects such as Calculus, Statistics, Economics, Psychology, English, Biology, Chemistry, and Physics.",
         tag: "Score-focused",
       },
       {
@@ -137,15 +142,15 @@ const content = {
         tag: "Pathway support",
       },
       {
-        title: "International School Admissions Prep",
+        title: "International School Admissions Preparation",
         description:
           "Interview practice, writing support, entrance assessment preparation, and school-fit guidance for students applying to international schools in Korea or abroad.",
         tag: "Admissions-ready",
       },
       {
-        title: "English Writing & Speaking",
+        title: "English Reading, Writing & Speaking",
         description:
-          "Structured English support for students who need stronger academic writing, speaking confidence, interview answers, vocabulary, and reading comprehension.",
+          "Structured English support for students who need stronger reading comprehension, vocabulary, grammar, academic writing, speaking confidence, and interview answers.",
         tag: "English fluency",
       },
       {
@@ -176,7 +181,8 @@ const content = {
       ],
     ],
     whyIntro: "Why Families Choose Us",
-    whyTitle: "Premium tutoring should feel structured, transparent, and reliable.",
+    whyTitle:
+      "Premium tutoring should feel structured, transparent, and reliable.",
     whyText:
       "Parents should not have to guess whether a class is working. We combine careful tutor matching, clear academic planning, and consistent communication.",
     trustPoints: [
@@ -208,7 +214,7 @@ const content = {
       "Customized study plan",
       "Weakness-based practice",
       "Homework and test preparation",
-      "Confidence-building speaking and writing support",
+      "Confidence-building reading, speaking, and writing support",
     ],
     consultIntro: "Start Here",
     consultTitle: "Request a private consultation.",
@@ -231,6 +237,8 @@ const content = {
     nav: ["프로그램", "진행 방식", "신뢰 포인트", "성과", "상담 신청"],
     book: "상담 신청",
     switchLang: "English",
+    blog: "네이버 블로그",
+    emailLabel: "이메일 문의",
     heroBadge: "AP · SAT · SSAT · TOEFL · GED · 입학 준비 · 영어 · 수학",
     heroTitle: "목표가 뚜렷한 학생을 위한 프리미엄 1:1 학습 멘토링.",
     heroText:
@@ -250,7 +258,7 @@ const content = {
         title: "AP + SAT 학생",
         rows: [
           ["목표", "AP Calculus BC 5점 + SAT Math 향상"],
-          ["학생", "국제학교 Grade 10"],
+          ["학생", "국제학교 학생"],
           ["집중 영역", "약점 분석, 시간 관리 연습, 주간 복습"],
           ["학부모 리포트", "수업 내용 + 숙제 플랜 전달"],
         ],
@@ -259,7 +267,7 @@ const content = {
         title: "SSAT 준비 학생",
         rows: [
           ["목표", "SSAT Verbal, Reading, Vocabulary 향상"],
-          ["학생", "입학 시험을 준비하는 Grade 7 학생"],
+          ["학생", "입학 시험을 준비하는 학생"],
           ["집중 영역", "어휘, 독해 정확도, 문제풀이 전략"],
           ["학부모 리포트", "목표 단어 숙제 + 진도 확인"],
         ],
@@ -268,7 +276,7 @@ const content = {
         title: "TOEFL 준비 학생",
         rows: [
           ["목표", "TOEFL speaking, writing, reading 점수 향상"],
-          ["학생", "국제학교 또는 해외 진학을 준비하는 고등학생"],
+          ["학생", "국제학교 또는 해외 진학을 준비하는 학생"],
           ["집중 영역", "speaking 구조, essay 첨삭, 시간 관리 연습"],
           ["학부모 리포트", "목표 점수별 연습 리포트 + 다음 단계"],
         ],
@@ -277,17 +285,17 @@ const content = {
         title: "국제학교 입학 준비 학생",
         rows: [
           ["목표", "국제학교 인터뷰 및 writing assessment 준비"],
-          ["학생", "국내외 국제학교 지원을 준비하는 중학생"],
+          ["학생", "국내외 국제학교 지원을 준비하는 학생"],
           ["집중 영역", "자기소개, 인터뷰 답변, writing 연습"],
           ["학부모 리포트", "모의 인터뷰 피드백 + 준비도 점검"],
         ],
       },
       {
-        title: "영어 Writing 학생",
+        title: "영어 학생",
         rows: [
-          ["목표", "학업 writing 실력과 학교 수행 향상"],
-          ["학생", "writing 기초를 보완해야 하는 중학생"],
-          ["집중 영역", "문단 구조, 문법 교정, guided writing"],
+          ["목표", "독해, writing, speaking 자신감 향상"],
+          ["학생", "영어 기초와 표현력을 보완해야 하는 학생"],
+          ["집중 영역", "독해력, 문법, guided writing"],
           ["학부모 리포트", "첨삭 내용 + 성장 포인트 전달"],
         ],
       },
@@ -303,7 +311,7 @@ const content = {
       {
         title: "AP 1:1 수업",
         description:
-          "Calculus, Statistics, Economics, Psychology, English, Biology, Chemistry, Physics 등 AP 과목의 개념 이해, 문제풀이, 시험 전략, 실전 연습을 학생 수준에 맞춰 진행합니다.",
+          "Calculus, Statistics, Economics, Psychology, English, Biology, Chemistry, Physics 등 AP 과목의 개념 이해, 문제풀이, FRQ 또는 essay 답안 구성, 시험 전략을 학생 수준에 맞춰 진행합니다.",
         tag: "점수 목표형",
       },
       {
@@ -337,9 +345,9 @@ const content = {
         tag: "입학 대비형",
       },
       {
-        title: "영어 Writing & Speaking",
+        title: "영어 독해·Writing·Speaking",
         description:
-          "학업 writing, speaking 자신감, 인터뷰 답변, vocabulary, reading comprehension을 학생 수준에 맞춰 체계적으로 지도합니다.",
+          "독해력, 어휘, 문법, academic writing, speaking 자신감, 인터뷰 답변 구성을 학생 수준에 맞춰 체계적으로 지도합니다.",
         tag: "영어 실력 강화",
       },
       {
@@ -370,7 +378,8 @@ const content = {
       ],
     ],
     whyIntro: "왜 PrimePath인가요?",
-    whyTitle: "프리미엄 수업은 체계적이고, 투명하고, 믿을 수 있어야 합니다.",
+    whyTitle:
+      "프리미엄 수업은 체계적이고, 투명하고, 믿을 수 있어야 합니다.",
     whyText:
       "학부모님이 수업이 잘 진행되고 있는지 추측하지 않도록, 멘토 매칭부터 학습 계획, 수업 후 피드백까지 명확하게 관리합니다.",
     trustPoints: [
@@ -402,7 +411,7 @@ const content = {
       "맞춤형 학습 계획",
       "약점 중심 문제 연습",
       "숙제 및 시험 대비",
-      "영어 말하기와 writing 자신감 향상",
+      "독해, 말하기, writing 자신감 향상",
     ],
     consultIntro: "상담 신청",
     consultTitle: "1:1 비공개 상담을 신청하세요.",
@@ -1088,6 +1097,17 @@ export default function PremiumTutoringLandingPage() {
                 </div>
               </div>
             </div>
+
+            <div className="mt-10 flex justify-center">
+              <a
+                href={blogLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-full border border-black/10 bg-white px-7 py-4 text-sm font-semibold text-[#18212F] shadow-sm transition hover:bg-[#F7F3EA]"
+              >
+                {t.blog} <ArrowRight className="ml-2" size={18} />
+              </a>
+            </div>
           </div>
         </section>
 
@@ -1138,9 +1158,29 @@ export default function PremiumTutoringLandingPage() {
                 {t.submit} <ArrowRight className="ml-2" size={18} />
               </a>
 
-              <p className="mt-4 text-center text-xs leading-6 text-gray-500">
-                {t.formNote}
-              </p>
+              <div className="mt-5 text-center text-sm leading-7 text-gray-600">
+                <p>{t.formNote}</p>
+
+                <div className="mt-3 flex flex-col items-center justify-center gap-1 sm:flex-row sm:gap-4">
+                  <a
+                    href={blogLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-[#9A6A2F] underline-offset-4 hover:underline"
+                  >
+                    {t.blog}
+                  </a>
+
+                  <span className="hidden text-gray-300 sm:inline">|</span>
+
+                  <a
+                    href={`mailto:${contactEmail}`}
+                    className="font-semibold text-[#9A6A2F] underline-offset-4 hover:underline"
+                  >
+                    {t.emailLabel}: {contactEmail}
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -1149,7 +1189,30 @@ export default function PremiumTutoringLandingPage() {
       <footer className="border-t border-black/5 px-6 py-10">
         <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 text-sm text-gray-500 md:flex-row">
           <p>© 2023 {t.brand}. All rights reserved.</p>
-          <p>{t.footer}</p>
+
+          <div className="flex flex-col gap-2 md:items-end">
+            <p>{t.footer}</p>
+
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={blogLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-[#9A6A2F] underline-offset-4 hover:underline"
+              >
+                {t.blog}
+              </a>
+
+              <span className="text-gray-300">|</span>
+
+              <a
+                href={`mailto:${contactEmail}`}
+                className="font-semibold text-[#9A6A2F] underline-offset-4 hover:underline"
+              >
+                {contactEmail}
+              </a>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
